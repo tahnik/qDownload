@@ -4,7 +4,8 @@ DownloadManager::DownloadManager(QObject *parent) : QObject(parent)
 {
 }
 
-void DownloadManager::addToQueue(QString url) {
+void DownloadManager::addToQueue(QString url)
+{
   QRegularExpression re("[\\S]+");
   QRegularExpressionMatch match = re.match(url);
   bool hasMatch = match.hasMatch();

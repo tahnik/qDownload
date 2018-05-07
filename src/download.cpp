@@ -71,19 +71,19 @@ void Download::beginDownload()
   QNetworkRequest request(m_url);
   currentDownload = m_manager.head(request);
   connect(
-        currentDownload,
-        SIGNAL(finished()),
-        SLOT(receivedHeader())
-        );
+      currentDownload,
+      SIGNAL(finished()),
+      SLOT(receivedHeader())
+  );
   connect(
-        currentDownload,
-        SIGNAL(error(QNetworkReply::NetworkError)),
-        SLOT(errorReceived(QNetworkReply::NetworkError)));
+      currentDownload,
+      SIGNAL(error(QNetworkReply::NetworkError)),
+      SLOT(errorReceived(QNetworkReply::NetworkError)));
   connect(
-    this,
-    SIGNAL(abortDownload()),
-    currentDownload,
-    SLOT(abort())
+      this,
+      SIGNAL(abortDownload()),
+      currentDownload,
+      SLOT(abort())
   );
 }
 
@@ -111,7 +111,8 @@ void Download::receivedHeader()
       {
         beginRange++;
       }
-      if (i == (MAX_CHUNK - 1)) {
+      if (i == (MAX_CHUNK - 1))
+      {
         endRange = beginRange + (m_fileSize - 1);
       }
       QString range("bytes=");
@@ -119,26 +120,27 @@ void Download::receivedHeader()
       request.setRawHeader("Range", range.toUtf8());
       QNetworkReply *reply = m_manager.get(request);
       connect(
-        this,
-        SIGNAL(abortDownload()),
-        reply,
-        SLOT(abort())
+          this,
+          SIGNAL(abortDownload()),
+          reply,
+          SLOT(abort())
       );
       connect(
-            reply,
-            SIGNAL(readyRead()),
-            SLOT(downloadReadyRead())
-            );
+          reply,
+          SIGNAL(readyRead()),
+          SLOT(downloadReadyRead())
+      );
       connect(
-            reply,
-            SIGNAL(error(QNetworkReply::NetworkError)),
-            SLOT(errorReceived(QNetworkReply::NetworkError)));
+          reply,
+          SIGNAL(error(QNetworkReply::NetworkError)),
+          SLOT(errorReceived(QNetworkReply::NetworkError)));
       QString filename(m_name + "_" + QString::number(i));
       m_files[i] = new QFile(filename);
-      if (!m_files[i]->open(QIODevice::ReadWrite)) {
+      if (!m_files[i]->open(QIODevice::ReadWrite))
+      {
         fprintf(stderr, "Could not open %s for writing: %s\n",
-          qPrintable(m_name),
-          qPrintable(m_files[i]->errorString()));
+                qPrintable(m_name),
+                qPrintable(m_files[i]->errorString()));
         return;
       }
       m_chunks.append(reply);
@@ -156,10 +158,11 @@ void Download::downloadFinished(QNetworkReply* reply)
   if (m_chunkReceived == (MAX_CHUNK + 1))
   {
     QFile finalFile(m_name);
-    if (!finalFile.open(QIODevice::WriteOnly)) {
+    if (!finalFile.open(QIODevice::WriteOnly))
+    {
       fprintf(stderr, "Could not open %s for writing: %s\n",
-        qPrintable(m_name),
-        qPrintable(finalFile.errorString()));
+              qPrintable(m_name),
+              qPrintable(finalFile.errorString()));
       return;
     }
 

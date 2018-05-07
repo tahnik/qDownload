@@ -1,0 +1,5 @@
+--style=allman
+--indent=spaces=2
+--indent-switches
+--indent-continuation=2
+--pad-comma
