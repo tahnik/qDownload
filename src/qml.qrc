@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>download.qml</file>
+        <file>assets/stop.png</file>
+        <file>assets/restart.png</file>
+        <file>assets/delete.png</file>
+        <file>assets/remove.png</file>
+    </qresource>
+</RCC>
